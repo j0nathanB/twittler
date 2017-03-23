@@ -6,10 +6,14 @@ $(document).ready(function(){
   $feed.appendTo($deck);
 
   function displayTweets(context){
+    var postedAt;
+    var $user;
+    var $tweetTime;
+
     $feed.html('');
 
     if (context === 'all') {
-      source = streams.home; // {streams} comes from data_generator.js
+      source = streams.home;
     } else if (context) {
       source = streams.users[context];
     }
@@ -18,20 +22,26 @@ $(document).ready(function(){
     for (index; index >= 0; index--){
       var tweet = source[index];
       var $tweet = $('<div></div>');
-      var postedAt = moment(tweet.created_at).format('HH:mm:ss');
-      var $user = $('<a></a>');
+      
+      postedAt = moment(tweet.created_at).format('HH:mm:ss');
+      $tweetTime = $('<span></span>');
+      $tweetTime.addClass('timestamp');
+      $tweetTime.text('[' + postedAt + ']  ');
+      $tweetTime.appendTo($tweet);      
 
+      $user = $('<a></a>');
       $user.attr({'href': '#', 'data-user': tweet.user, 'class': 'username'});
       $user.text('<' + tweet.user + '>');
       $user.appendTo($tweet);
 
-      $tweet.text('[' + postedAt + ']  ' +'<' + tweet.user + '>  ' + tweet.message);
+      $tweet.append(': ' + tweet.message);
+
       $tweet.appendTo($feed);
     }
 
     $('.username').on('click', function (e) {
       e.preventDefault();
-      printTweets($(this).data('user'));
+      displayTweets($(this).data('user'));
     });
   }
     
