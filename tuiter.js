@@ -6,6 +6,8 @@ $(document).ready(function(){
   $feed.appendTo($deck);
 
   function displayTweets(){
+    $feed.html('');
+
     var index = streams.home.length - 1;
     for (index; index >= 0; index--){
       var tweet = streams.home[index];
@@ -16,6 +18,6 @@ $(document).ready(function(){
       $tweet.appendTo($feed);
     }
   }
-
-  setInterval(displayTweets(), 100);
+    
+  setInterval(displayTweets, 1000); 
 });
