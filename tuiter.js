@@ -12,9 +12,9 @@ $(document).ready(function(){
     for (index; index >= 0; index--){
       var tweet = streams.home[index];
       var $tweet = $('<div></div>');
-      var postedAt = tweet.created_at.toLocaleTimeString();
+      var postedAt = moment(tweet.created_at).format('HH:mm:ss');
       
-      $tweet.text('[' + postedAt + ']' +'@' + tweet.user + ': ' + tweet.message);
+      $tweet.text('[' + postedAt + ']  ' +'<' + tweet.user + '>  ' + tweet.message);
       $tweet.appendTo($feed);
     }
   }
